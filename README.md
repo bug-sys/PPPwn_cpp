@@ -40,8 +40,8 @@ You can also add cmake option `-DUSE_SYSTEM_PCAP=OFF` to compile pcap from sourc
 cmake -B build
 cmake --build build -t pppwn
 
-# cross compile for mipsel linux (soft float)
-cmake -B build -DZIG_TARGET=mipsel-linux-musl -DUSE_SYSTEM_PCAP=OFF -DZIG_COMPILE_OPTION="-msoft-float"
+# cross compile for arm linux (mpcorenovfp)
+cmake -B build -DZIG_TARGET=arm-linux-musleabi -DUSE_SYSTEM_PCAP=OFF -DZIG_COMPILE_OPTION="-mpcorenovfp"
 cmake --build build -t pppwn
 
 # cross compile for arm linux (armv7 cortex-a7)
