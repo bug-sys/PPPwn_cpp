@@ -111,11 +111,11 @@ enum FirmwareVersion getFirmwareOffset(int fw) {
 int main(int argc, char *argv[]) {
     using namespace clipp;
     std::cout << "[+] PPPwn++ - PlayStation 4 PPPoE RCE by theflow" << std::endl;
-    std::string interface, stage1 = "stage1/stage1.bin", stage2 = "stage2/stage2.bin";
+    std::string interface, stage1 = "stage1.bin", stage2 = "stage2.bin";
     int fw = 1100;
-    int timeout = 0
-    bool retry = false;
-    bool no_wait_padi = false;
+    int timeout = 0;
+    bool retry = true;
+    bool no_wait_padi = true;
 
     auto cli = (
             ("network interface" % required("--interface") & value("interface", interface), \
