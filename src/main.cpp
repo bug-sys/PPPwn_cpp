@@ -146,11 +146,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    std::cout << "[+] args: interface=" << interface << " fw=" << fw << " stage1=" << stage1 << " stage2=" << stage2
-              << " timeout=" << timeout << " groom-delay=" << groom_delay
-              << " auto-retry=" << (retry ? "on" : "off") << " no-wait-padi=" << (no_wait_padi ? "on" : "off")
-              << std::endl;
-
 #ifdef _WIN32
 
     timeBeginPeriod(1);
@@ -175,7 +170,7 @@ int main(int argc, char *argv[]) {
 
     while (exploit.run() != 0) {
         exploit.ppp_byebye();
-        std::cerr << "[*] Retry after 5s..." << std::endl;
+        std::cerr << "\033[91mHEN gagal! Memulai ulang pppwn...\033[0m" << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(5));
     }
     return 0;
