@@ -110,7 +110,7 @@ enum FirmwareVersion getFirmwareOffset(int fw) {
 
 int main(int argc, char *argv[]) {
     using namespace clipp;
-    std::cout << "Porting to STB by SUIJUNG" << std::endl;
+    std::cout << "\033[1;32mPorting to STB by bug-sys - 2024 (c)\033[0m" << std::endl;
     std::string interface, stage1 = "stage1.bin", stage2 = "stage2.bin";
     int fw = 1100;
     int timeout = 0;
