@@ -145,8 +145,8 @@ enum FirmwareVersion getFirmwareOffset(int fw) {
 
 int main(int argc, char *argv[]) {
     using namespace clipp;
-    std::cout << "[+] PPPwn++ - PlayStation 4 PPPoE RCE by theflow" << std::endl;
-    std::string interface, stage1 = "stage1/stage1.bin", stage2 = "stage2/stage2.bin";
+    std::cout << "\033[1;32mPorting to STB by bug-sys - 2024 (c)\033[0m" << std::endl;
+    std::string interface, stage1 = "stage1.bin", stage2 = "stage2.bin";
     int fw = 1100;
     bool retry = false;
 
@@ -172,9 +172,6 @@ int main(int argc, char *argv[]) {
         std::cout << make_man_page(cli, "pppwn");
         return 1;
     }
-
-    std::cout << "[+] args: interface=" << interface << " fw=" << fw << " stage1=" << stage1 << " stage2=" << stage2
-              << " auto-retry=" << (retry ? "on" : "off") << std::endl;
 
     int ret = 0;
 #ifdef _WIN32
