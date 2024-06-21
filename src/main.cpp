@@ -110,23 +110,20 @@ enum FirmwareVersion getFirmwareOffset(int fw) {
 
 int main(int argc, char *argv[]) {
     using namespace clipp;
-    std::cout << "\033[1;32mPorting to STB by bug-sys - 2024 (c)\033[0m" << std::endl;
-    std::string interface, stage1 = "stage1.bin", stage2 = "stage2.bin";
+    std::cout << "[+] PPPwn++ - PlayStation 4 PPPoE RCE by theflow" << std::endl;
+    std::string interface, stage1 = "stage1/stage1.bin", stage2 = "stage2/stage2.bin";
     int fw = 1100;
-    int timeout = 0;
+    int timeout = 0
     bool retry = false;
     bool no_wait_padi = false;
-    int groom_delay = 4;
 
     auto cli = (
             ("network interface" % required("--interface") & value("interface", interface), \
             SUPPORTED_FIRMWARE % option("--fw") & integer("fw", fw), \
-            "stage1 binary (default: stage1.bin)" % option("-s1", "--stage1") & value("STAGE1", stage1), \
-            "stage2 binary (default: stage2.bin)" % option("-s2", "--stage2") & value("STAGE2", stage2), \
+            "stage1 binary (default: stage1/stage1.bin)" % option("-s1", "--stage1") & value("STAGE1", stage1), \
+            "stage2 binary (default: stage2/stage2.bin)" % option("-s2", "--stage2") & value("STAGE2", stage2), \
             "timeout in seconds for ps4 response, 0 means always wait (default: 0)" %
             option("-t", "--timeout") & integer("seconds", timeout), \
-            "wait for 1ms every `n` rounds during Heap grooming (default: 4)" % option("-gd", "--groom-delay") &
-            integer("1-4097", groom_delay), \
             "automatically retry when fails or timeout" % option("-a", "--auto-retry").set(retry), \
             "don't wait one more PADI before starting" % option("-nw", "--no-wait-padi").set(no_wait_padi)
             ) | \
@@ -145,6 +142,11 @@ int main(int argc, char *argv[]) {
         std::cout << make_man_page(cli, "pppwn");
         return 1;
     }
+
+    std::cout << "[+] args: interface=" << interface << " fw=" << fw << " stage1=" << stage1 << " stage2=" << stage2
+              << " timeout=" << timeout
+              << " auto-retry=" << (retry ? "on" : "off") << " no-wait-padi=" << (no_wait_padi ? "on" : "off")
+              << std::endl;
 
 #ifdef _WIN32
 
@@ -165,12 +167,12 @@ int main(int argc, char *argv[]) {
     exploit.setStage2(std::move(stage2_data));
     exploit.setTimeout(timeout);
     exploit.setWaitPADI(!no_wait_padi);
-    exploit.setGroomDelay(groom_delay);
+
     if (!retry) return exploit.run();
 
     while (exploit.run() != 0) {
         exploit.ppp_byebye();
-        std::cerr << "\033[91mHEN gagal! Memulai ulang pppwn...\033[0m" << std::endl;
+        std::cerr << "[*] Retry after 5s..." << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(5));
     }
     return 0;
