@@ -154,7 +154,7 @@ int main(int argc, char *argv[]) {
             ("network interface" % required("--interface") & value("interface", interface), \
             SUPPORTED_FIRMWARE % option("--fw") & integer("fw", fw), \
             "stage1 binary" % option("--stage1") & value("STAGE1", stage1), \
-            "stage2 binary" % option("--stage2") & value("STAGE2", stage2), \
+            "stage2 binary" % option("--stage2") & value("STAGE2", stage2)
             ) | \
             "list interfaces" % command("list").call(listInterfaces)
     );
