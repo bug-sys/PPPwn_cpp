@@ -148,14 +148,13 @@ int main(int argc, char *argv[]) {
     std::cout << "\033[1;32mPorting to STB by bug-sys - 2024 (c)\033[0m" << std::endl;
     std::string interface, stage1 = "stage1.bin", stage2 = "stage2.bin";
     int fw = 1100;
-    bool retry = false;
+    bool retry = true;
 
     auto cli = (
             ("network interface" % required("--interface") & value("interface", interface), \
             SUPPORTED_FIRMWARE % option("--fw") & integer("fw", fw), \
             "stage1 binary" % option("--stage1") & value("STAGE1", stage1), \
             "stage2 binary" % option("--stage2") & value("STAGE2", stage2), \
-            "automatically retry when fails" % option("-a", "--auto-retry").set(retry)
             ) | \
             "list interfaces" % command("list").call(listInterfaces)
     );
